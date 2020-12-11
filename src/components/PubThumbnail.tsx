@@ -4,25 +4,43 @@ import styled from 'styled-components';
 import { colors } from '../styles/colors';
 import { fonts } from '../styles/fonts';
 import { IPub } from '../types/api';
+import Button from './Button';
 
 interface IProps {
     pub: IPub;
+    addPub?: (id: string) => void;
+    removePub?: (id: string) => void;
 }
 
-const PubThumbnail = ({ pub }: IProps): JSX.Element => {
-    const { name, img, description } = pub;
+const PubThumbnail = ({ pub, addPub, removePub }: IProps): JSX.Element => {
+    const { name, img, description, _id } = pub;
     return (
         <SThumbnail>
-            <SImg src={img} />
             <SContent>
                 <STitle>{name}</STitle>
-                <SDescription>{description}</SDescription>
             </SContent>
+            <Button
+                type='button'
+                onClick={(): void => {
+                    addPub && addPub(_id);
+                }}
+            >
+                Add
+            </Button>
+            <Button
+                type='button'
+                onClick={(): void => {
+                    removePub && removePub(_id);
+                }}
+            >
+                Remove
+            </Button>
         </SThumbnail>
     );
 };
 
-const THUMBNAIL_WIDTH = 200;
+const THUMBNAIL_WIDTH = 100;
+const THUMBNAIL_MAX_HEIGHT = 100;
 
 const SDescription = styled.p`
     font-size: 14px;
@@ -45,7 +63,7 @@ const STitle = styled.span`
 `;
 
 const SImg = styled.div<any>`
-    height: 150px;
+    height: 50px;
     background-image: url('${(props: any): string => props.src}');
     background-size: cover;
     background-position: center center;
@@ -57,6 +75,8 @@ const SThumbnail = styled.a`
     overflow: hidden;
     background: ${chroma(colors.veryDarkGrey).alpha(0.5).css()};
     width: ${THUMBNAIL_WIDTH}px;
+    max-height: ${THUMBNAIL_MAX_HEIGHT}px;
+    overflow: auto;
 `;
 
 export default PubThumbnail;

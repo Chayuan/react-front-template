@@ -8,13 +8,23 @@ interface IProps {
     label?: string;
     type: string;
     placeholder?: string;
+    value?: string;
 }
 
-const Input = ({ name, label, type, placeholder }: IProps): JSX.Element => {
+const Input = ({ name, label, type, placeholder, value }: IProps): JSX.Element => {
     return (
         <SInputContainer>
             {label && <SLabel>{label}</SLabel>}
-            <SInput name={name} type={type} placeholder={placeholder} withLabel={!!label} />
+            <SInput
+                name={name}
+                type={type}
+                placeholder={placeholder}
+                withLabel={!!label}
+                value={value}
+                onChange={(): void => {
+                    // stuff
+                }}
+            />
         </SInputContainer>
     );
 };
