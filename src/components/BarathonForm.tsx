@@ -9,33 +9,41 @@ interface IProps {
 }
 
 const BarathonForm = ({ pubs }: IProps): JSX.Element => {
-    const [selectedPubs, setSelectedPubs] = useState<string>('');
+    const [selectedPubs, setSelectedPubs] = useState<IPub[]>([]);
 
     const handleSubmit = (): void => {
 
     };
 
+    const removeLastPub = (): void => {
+        const pubs = [...selectedPubs];
+        pubs.pop();
+        setSelectedPubs(pubs);
+    };
+
     const addPub = (id: string): void => {
-        setSelectedPubs(`${selectedPubs}${selectedPubs.length ? ',' : ''}${id}`);
+        const selectedPub = pubs.find((pub: IPub) => {
+            if (pub._id === id) return true;
+            return false;
+        });
+
+        setSelectedPubs([...selectedPubs, selectedPub]);
     };
 
     const removePub = (id: string): void => {
-        const splittedPubs = selectedPubs.split(',');
-
-        const filteredPubs = splittedPubs.filter((pubId: string) => {
-            if (id === pubId) return false;
+        setSelectedPubs(selectedPubs.filter((pub: IPub) => {
+            if (id === pub._id) return false;
             return true;
-        });
-
-        setSelectedPubs(filteredPubs.join(','));
+        }));
     };
 
     return (
         <form onSubmit={handleSubmit}>
             <Input label='Nom' name="name" type="text" placeholder='Nom de votre parcours' />
             <Input label='Auteur' name="author" type="text" placeholder='Votre pseudo' />
-            <Input label='pubs' name="pubs" type="text" value={selectedPubs} />
-            <Map pubs={pubs} addPub={addPub} removePub={removePub} />
+            <Input label='pubs' name="pubs" type="text" value={selectedPubs.map((pub: IPub) => pub._id).join(',')} />
+            <Button onClick={removeLastPub} type='button'>Remove last</Button>
+            <Map pubs={pubs} addPub={addPub} removePub={removePub} selectedPubs={selectedPubs} />
             <Button type='submit'>Soumettre</Button>
         </form>
     );

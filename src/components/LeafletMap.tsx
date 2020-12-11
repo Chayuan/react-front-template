@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { IPub } from '../types/api';
@@ -9,11 +9,12 @@ const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">Op
 
 interface IProps {
     pubs: IPub[];
+    selectedPubs: IPub[];
     addPub: (id: string) => void;
     removePub: (id: string) => void;
 }
 
-const LeafletMap = ({ pubs, addPub, removePub }: IProps): JSX.Element => {
+const LeafletMap = ({ pubs, addPub, removePub, selectedPubs }: IProps): JSX.Element => {
     return (
         <SMapContainer>
             <MapContainer
