@@ -5,6 +5,7 @@ import { colors } from '../styles/colors';
 import { fonts } from '../styles/fonts';
 import { IPub } from '../types/api';
 import Button from './Button';
+import useTimer from './MyContext';
 
 interface IProps {
     pub: IPub;
@@ -14,10 +15,11 @@ interface IProps {
 
 const PubThumbnail = ({ pub, addPub, removePub }: IProps): JSX.Element => {
     const { name, img, description, _id } = pub;
+    const { timer } = useTimer();
     return (
         <SThumbnail>
             <SContent>
-                <STitle>{name}</STitle>
+                <STitle>{name} {timer}</STitle>
             </SContent>
             <Button
                 type='button'
