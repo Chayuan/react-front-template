@@ -5,13 +5,6 @@ import { IPub } from '../types/api';
 import BarathonForm from './BarathonForm';
 import Section from './Section';
 
-const SContainer = styled.div`
-    background-color: ${colors.darkGrey};
-    height: 100%;
-    width: 100%;
-    padding: 15px;
-`;
-
 const App = (): JSX.Element => {
     // Déclaration d'une nouvelle variable d'état interne : pubs
     // RAPPEL: un changement d'état du composant provoque
@@ -39,7 +32,12 @@ const App = (): JSX.Element => {
         </SContainer>
     );
 };
-
+const SContainer = styled.div`
+    background-color: ${colors.white};
+    height: 100%;
+    width: 100%;
+    padding: 15px;
+`;
 const SPubsContainer = styled.div`
     display: flex; 
 `;

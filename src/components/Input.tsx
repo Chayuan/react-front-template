@@ -29,7 +29,7 @@ const Input = ({ name, label, type, placeholder, value }: IProps): JSX.Element =
     );
 };
 
-const INPUT_HEIGHT = 30;
+const INPUT_HEIGHT = 40;
 
 const SInputContainer = styled.div`
     display: flex;
@@ -38,26 +38,29 @@ const SInputContainer = styled.div`
 `;
 
 const SLabel = styled.label`
-    background: ${colors.veryDarkGrey};
+    background: ${colors.CustomColor_PinkRasberry};
     color: rgba(255, 255, 255, 0.8);
     line-height: ${INPUT_HEIGHT}px;
-    min-width: 80px;
+    min-width: 50px;
     text-align: right;
     font-size: 12px;
     padding-right: 15px;
-    border-radius: 4px 0 0 4px;
+    border-radius: 50px 0 0 50px;
 `;
 
 const SInput = styled.input<any>`
     display: block;
     box-sizing: border-box;
     height: ${INPUT_HEIGHT}px;
-    padding: 10px 10px;
+    min-width:35%;
+    padding: px 10px;
     border: none;
-    border-radius: ${props => props.withLabel ? '0 4px 4px 0' : '4px'};
-    background-color: ${colors.lightGrey};
+    border-radius: ${props => props.withLabel ? '0 50px 50px 0' : '50px'};
+    background-color: ${colors.white};
     font-family: ${fonts.text};
     color: ${colors.darkGrey};
+    outline: none;
+    text-align:center;
 
     &::placeholder {
         color: ${colors.darkGrey};

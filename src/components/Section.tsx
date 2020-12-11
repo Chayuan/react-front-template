@@ -15,10 +15,12 @@ const Section = ({ children }: IProps): JSX.Element => {
 };
 
 const SSection = styled.div`
-    border-radius: 4px;
+    display:flex;
+    justify-content:center;
+    border-radius: 20px;
     max-width: 800px;
     padding: 15px;
-    background-color: ${colors.grey};
+    background-color: ${colors.CustomColor_WhiteIvory};
     margin: 30px auto;
 `;
 
