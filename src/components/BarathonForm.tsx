@@ -11,8 +11,28 @@ interface IProps {
 const BarathonForm = ({ pubs }: IProps): JSX.Element => {
     const [selectedPubs, setSelectedPubs] = useState<IPub[]>([]);
 
-    const handleSubmit = (): void => {
+    const handleSubmit = async (e: any): Promise<void> => {
+        // evite le rechargement de la page au submit
+        e.preventDefault();
+        const checkpoints = e.target.elements.namedItem('pubs').value.split(',');
 
+        const values = {
+            name: e.target.elements.namedItem('name').value,
+            author: e.target.elements.namedItem('author').value,
+            checkpoints
+        };
+
+        const response = await fetch('https://miw-server.herokuapp.com/barathons', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(values)
+        });
+
+        const responseJSON = await response.json();
+        console.log(responseJSON);
     };
 
     const removeLastPub = (): void => {
@@ -43,7 +63,12 @@ const BarathonForm = ({ pubs }: IProps): JSX.Element => {
             <Input label='Auteur' name="author" type="text" placeholder='Votre pseudo' />
             <Input label='pubs' name="pubs" type="text" value={selectedPubs.map((pub: IPub) => pub._id).join(',')} />
             <Button onClick={removeLastPub} type='button'>Remove last</Button>
-            <Map pubs={pubs} addPub={addPub} removePub={removePub} selectedPubs={selectedPubs} />
+            <Map
+                pubs={pubs}
+                addPub={addPub}
+                removePub={removePub}
+                selectedPubs={selectedPubs}
+            />
             <Button type='submit'>Soumettre</Button>
         </form>
     );

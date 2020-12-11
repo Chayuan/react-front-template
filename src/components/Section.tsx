@@ -16,7 +16,7 @@ const Section = ({ children }: IProps): JSX.Element => {
 
 const SSection = styled.div`
     border-radius: 4px;
-    max-width: 320px;
+    max-width: 800px;
     padding: 15px;
     background-color: ${colors.grey};
     margin: 30px auto;
