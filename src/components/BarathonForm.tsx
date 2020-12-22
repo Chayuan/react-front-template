@@ -31,7 +31,9 @@ const BarathonForm = ({ pubs }: IProps): JSX.Element => {
             },
             body: JSON.stringify(values)
         }).then((rep) => {
+            //Vérifier l'état de la requête (si erreur serveur)
             if (rep.status >= 400 && rep.status < 600) {
+                //Afficher l'alert succès
                 Swal.fire({
                     icon: 'error',
                     title: 'Erreur.',
@@ -39,6 +41,7 @@ const BarathonForm = ({ pubs }: IProps): JSX.Element => {
                   })
             }
             else{
+                //Afficher l'alert erreur
                 Swal.fire(
                     'Envoyé',
                     'L\'ajout de votre barathon s\'est correctement effectué',
@@ -48,8 +51,6 @@ const BarathonForm = ({ pubs }: IProps): JSX.Element => {
             
             const responseJSON = rep.json();
         })
-       
-        //console.log(responseJSON)
     };
 
     const removeLastPub = (): void => {
@@ -74,7 +75,6 @@ const BarathonForm = ({ pubs }: IProps): JSX.Element => {
             return true;
         }));
     };
- 
 
     return (
         <form onSubmit={handleSubmit}>

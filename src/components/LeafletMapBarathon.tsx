@@ -18,36 +18,24 @@ interface IProps {
 
 const LeafletMap = ({ pubs, addPub, removePub, selectedPubs }: IProps): JSX.Element => {
     const polylineArray: LatLngExpression[] = selectedPubs.map((pub: IPub) => {
-        return [pub.latlng.lat, pub.latlng.lng];
+        return [pub[0], pub[1]];
     });
-
+    console.log(pubs)
     return (
         <SMapContainer>
             <MapContainer
                 center={[44.5667, 6.0833]}
                 zoom={14}
                 style={{
-                    width: 700,
-                    height: 500
+                    width: 400,
+                    height: 250
                 }}
             >
                 <TileLayer
                     attribution={ATTRIBUTION}
                     url={TILE_LAYER}
                 />
-                {pubs.map((pub: IPub) => {
-                    return (
-                        <Marker position={[pub.latlng.lat, pub.latlng.lng]} key={pub._id}>
-                            <Popup>
-                                <PubThumbnail
-                                    pub={pub}
-                                    addPub={addPub}
-                                    removePub={removePub}
-                                />
-                            </Popup>
-                        </Marker>
-                    );
-                })}
+              
                 <Polyline pathOptions={{ color: colors.vibrant }} positions={polylineArray} />
             </MapContainer>
         </SMapContainer>

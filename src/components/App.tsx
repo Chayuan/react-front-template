@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { colors } from '../styles/colors';
-import { IPub } from '../types/api';
+import { IBarathon, IPub } from '../types/api';
 import BarathonForm from './BarathonForm';
+import BarathonsList from './BarathonsList';
 import Section from './Section';
 
 const App = (): JSX.Element => {
@@ -10,6 +11,7 @@ const App = (): JSX.Element => {
     // RAPPEL: un changement d'état du composant provoque
     //         son re-rendu
     const [pubs, setPubs] = useState<IPub[]>([]);
+    const [barathons, setBarathons] = useState<IBarathon[]>([]);
 
     // fonction executé au montage du composant
     // dans le DOM
@@ -20,14 +22,29 @@ const App = (): JSX.Element => {
             const pubs = await response.json();
             setPubs(pubs);
         };
-
         fetchPubs();
+        const fetchBarathons = async (): Promise<void> => {
+            const response = await fetch('https://miw-server.herokuapp.com/barathons');
+            const barathons = await response.json();
+            setBarathons(barathons);
+        };
+        fetchBarathons();
     }, []);
+    const getCoordGpsFromBarathon(barathon){
+        return barathon;
+    }
+    getCoordGpsFromBarathon(barathons[0]);
+    console.log(barathons);
 
     return (
         <SContainer>
+            <h3>Ajouter un barathon</h3>
             <Section>
                 <BarathonForm pubs={pubs} />
+            </Section>
+            <h3>Les parcours barathons</h3>
+            <Section>      
+                <BarathonsList barathons={barathons}/>
             </Section>
         </SContainer>
     );
