@@ -47,6 +47,7 @@
     "leaflet": "^1.7.1",
     "node-sass": "^5.0.0",
     "react": "^16.13.1",
+    "react-bootstrap-sweetalert": "^5.2.0",
     "react-dom": "^16.13.1",
     "react-leaflet": "^3.0.2",
     "sass-loader": "^10.1.0",

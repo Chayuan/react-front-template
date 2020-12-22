@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, Component } from 'react';
 import { IPub } from '../types/api';
 import Button from './Button';
 import Input from './Input';
 import Map from './LeafletMap';
-
+//Permet d'afficher des alerts
 interface IProps {
     pubs: IPub[]
 }
+
 
 const BarathonForm = ({ pubs }: IProps): JSX.Element => {
     const [selectedPubs, setSelectedPubs] = useState<IPub[]>([]);
@@ -29,10 +30,26 @@ const BarathonForm = ({ pubs }: IProps): JSX.Element => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(values)
-        });
-
-        const responseJSON = await response.json();
-        console.log(responseJSON);
+        }).then((rep) => {
+            if (rep.status >= 400 && rep.status < 600) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur.',
+                    text: 'L\'ajout de votre barathon a échoué'
+                  })
+            }
+            else{
+                Swal.fire(
+                    'Envoyé',
+                    'L\'ajout de votre barathon s\'est correctement effectué',
+                    'success'
+                  )
+            }
+            
+            const responseJSON = rep.json();
+        })
+       
+        //console.log(responseJSON)
     };
 
     const removeLastPub = (): void => {
@@ -40,6 +57,7 @@ const BarathonForm = ({ pubs }: IProps): JSX.Element => {
         pubs.pop();
         setSelectedPubs(pubs);
     };
+
 
     const addPub = (id: string): void => {
         const selectedPub = pubs.find((pub: IPub) => {
@@ -56,19 +74,21 @@ const BarathonForm = ({ pubs }: IProps): JSX.Element => {
             return true;
         }));
     };
+ 
 
     return (
         <form onSubmit={handleSubmit}>
             <Input label='Nom' name="name" type="text" placeholder='Nom de votre parcours' />
             <Input label='Auteur' name="author" type="text" placeholder='Votre pseudo' />
             <Input label='pubs' name="pubs" type="text" value={selectedPubs.map((pub: IPub) => pub._id).join(',')} />
-            <Button onClick={removeLastPub} type='button'>Remove last</Button>
+            <Button onClick={removeLastPub} type='button'>Supprimer dernier</Button>
             <Map
                 pubs={pubs}
                 addPub={addPub}
                 removePub={removePub}
                 selectedPubs={selectedPubs}
             />
+            
             <Button type='submit'>Soumettre</Button>
         </form>
     );
