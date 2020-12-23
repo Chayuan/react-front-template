@@ -2,26 +2,39 @@ import React, { useState, Component } from 'react';
 import { IBarathon, IPub } from '../types/api';
 import BarathonElement from './BarathonElement';
 import styled from 'styled-components';
-import Map from './LeafletMap';
+import Map from './LeafletMapBarathon';
 //Permet d'afficher des alerts
-interface IProps {
-    barathons: IBarathon[]
+interface IPropsBarathonList {
+    barathons: IBarathon[];
+    pubs: IPub[];
 }
 
+const BarathonsList = ({ barathons, pubs }: IPropsBarathonList): JSX.Element => {
+    //const selectedPubs: IPub[] = selectedBarathon != null ? selectedBarathon.checkpoints.map(c => { return pubs.find(p => p._id == c);}) : [];
+    const [selectedBarathon, setSelectedBarathon] = useState<IBarathon>(null);
 
-
-const BarathonsList = ({ barathons }: IProps): JSX.Element => {
-    const getCoordGpsFromBarathon = (barathon): void => {
-        console.log(barathon);
+    const selectBarathon = (pub: IBarathon): void => {
+        setSelectedBarathon(pub);
     };
-    getCoordGpsFromBarathon(barathons[0]);
+
+    const selectedPubs: IPub[] = selectedBarathon != null ? selectedBarathon.checkpoints.map(c => { return pubs.find(p => p._id == c); }) : [];
+
     return (
         <SBarathonsList>
-            {barathons.map((barathon: IBarathon) => {
-                return (
-                    <BarathonElement barathon={barathon} key={barathon._id} />
-                );
-            })}
+            {
+                barathons.map((barathon) => {
+                    console.log(barathon)
+                    return (
+                        <>
+                            <BarathonElement key={barathon._id} setSelectedBarathon={selectBarathon} barathon={barathon} pubs={pubs} />
+                            <Map
+                                pubs={pubs}
+                                selectedPubs={selectedPubs}
+                            />
+                        </>
+                    );
+                })
+            }
         </SBarathonsList>
 
 

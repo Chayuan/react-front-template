@@ -16,7 +16,7 @@ interface IProps {
     removePub?: (id: string) => void;
 }
 
-const LeafletMap = ({ pubs, addPub, removePub, selectedPubs }: IProps): JSX.Element => {
+const LeafletMap = ({ pubs, selectedPubs }: IProps): JSX.Element => {
     const polylineArray: LatLngExpression[] = selectedPubs.map((pub: IPub) => {
         return [pub[0], pub[1]];
     });
@@ -35,7 +35,17 @@ const LeafletMap = ({ pubs, addPub, removePub, selectedPubs }: IProps): JSX.Elem
                     attribution={ATTRIBUTION}
                     url={TILE_LAYER}
                 />
-              
+                 {pubs.map((pub: IPub) => {
+                    return (
+                        <Marker position={[pub.latlng.lat, pub.latlng.lng]} key={pub._id}>
+                            <Popup>
+                                <PubThumbnail
+                                    pub={pub}
+                                />
+                            </Popup>
+                        </Marker>
+                    );
+                })}
                 <Polyline pathOptions={{ color: colors.vibrant }} positions={polylineArray} />
             </MapContainer>
         </SMapContainer>

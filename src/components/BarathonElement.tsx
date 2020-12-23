@@ -4,18 +4,11 @@ import styled from 'styled-components';
 import TextNode from './TextNode';
 import Map from './LeafletMapBarathon';
 interface IProps {
-    barathon: IBarathon[],
+    barathon: IBarathon[];
 }
 
 
-const BarathonElement = ({ barathon }: IProps): JSX.Element => {
-    //const pubs = barathon.checkpoints;
-    const [selectedPubs, setSelectedPubs] = useState<IPub[]>([]);
-
-    const getCoordGpsFromBarathon = (barathon): void => {
-        return barathon;
-    };
-    getCoordGpsFromBarathon(barathons[1]);
+const BarathonElement = ({ barathon, setSelectedBarathon }: IProps): JSX.Element => {
     return (
         <SMetaBarathon>
             <STextNodeTitle>
@@ -23,12 +16,8 @@ const BarathonElement = ({ barathon }: IProps): JSX.Element => {
             </STextNodeTitle>
             <STextNodeAuthor>
                 <TextNode text={'Parcours crée par '+barathon.author}></TextNode>
-            </STextNodeAuthor>     
+            </STextNodeAuthor>
         </SMetaBarathon>
-        
-        
-
-
     );
 
 };

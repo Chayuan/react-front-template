@@ -30,11 +30,6 @@ const App = (): JSX.Element => {
         };
         fetchBarathons();
     }, []);
-    const getCoordGpsFromBarathon(barathon){
-        return barathon;
-    }
-    getCoordGpsFromBarathon(barathons[0]);
-    console.log(barathons);
 
     return (
         <SContainer>
@@ -44,7 +39,7 @@ const App = (): JSX.Element => {
             </Section>
             <h3>Les parcours barathons</h3>
             <Section>      
-                <BarathonsList barathons={barathons}/>
+                <BarathonsList barathons={barathons} pubs={pubs}/>
             </Section>
         </SContainer>
     );
