@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import TextNode from './TextNode';
 import Map from './LeafletMapBarathon';
 interface IProps {
-    barathon: IBarathon[];
+    barathon: IBarathon;
 }
 
 
-const BarathonElement = ({ barathon, setSelectedBarathon }: IProps): JSX.Element => {
+const BarathonElement = ({ barathon }: IProps): JSX.Element => {
     return (
         <SMetaBarathon>
             <STextNodeTitle>

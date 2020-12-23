@@ -18,6 +18,7 @@ interface IProps {
 
 const LeafletMap = ({ pubs, addPub, removePub, selectedPubs }: IProps): JSX.Element => {
     const polylineArray: LatLngExpression[] = selectedPubs.map((pub: IPub) => {
+        //console.log(pub);
         return [pub.latlng.lat, pub.latlng.lng];
     });
 

@@ -18,9 +18,12 @@ interface IProps {
 
 const LeafletMap = ({ pubs, selectedPubs }: IProps): JSX.Element => {
     const polylineArray: LatLngExpression[] = selectedPubs.map((pub: IPub) => {
-        return [pub[0], pub[1]];
+        if (pub == undefined) {
+            return  [0,0];
+        }
+        return [pub.latlng.lat, pub.latlng.lng];
+        //console.log(pub)
     });
-    console.log(pubs)
     return (
         <SMapContainer>
             <MapContainer
@@ -35,21 +38,28 @@ const LeafletMap = ({ pubs, selectedPubs }: IProps): JSX.Element => {
                     attribution={ATTRIBUTION}
                     url={TILE_LAYER}
                 />
-                 {pubs.map((pub: IPub) => {
-                    return (
-                        <Marker position={[pub.latlng.lat, pub.latlng.lng]} key={pub._id}>
-                            <Popup>
-                                <PubThumbnail
-                                    pub={pub}
-                                />
-                            </Popup>
-                        </Marker>
-                    );
-                })}
+                {
+                    selectedPubs.map((pub: IPub) => {
+                        //console.log('pub:');
+                        //console.log(pub);
+                        if (pub == undefined) {
+                            return;
+                        }
+                        return (
+                            <Marker position={[pub.latlng.lat, pub.latlng.lng]} key={pub._id}>
+                                <Popup>
+                                    <PubThumbnail
+                                        pub={pub}
+                                    />
+                                </Popup>
+                            </Marker>
+                        );
+                    })}
                 <Polyline pathOptions={{ color: colors.vibrant }} positions={polylineArray} />
             </MapContainer>
         </SMapContainer>
     );
+
 };
 
 const SMapContainer = styled.div`
